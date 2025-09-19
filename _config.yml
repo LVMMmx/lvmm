@@ -2,3 +2,8 @@ remote_theme: "jekyll/minima@1e8a445"
 title: LVMM HPC cluster how to
 description: Guia de uso del cluster HPC LVMM del CNyN
 author: Aldo Gerardo Rodríguez Guerrero
+
+repository:
+  url                       : https://github.com/LVMMmx/lvmm  # The URL to your book's repository
+  path_to_book              : ""  # A path to your book's folder, relative to the repository root.
+  branch                    : master  # Which branch of the repository should be used when creating links
