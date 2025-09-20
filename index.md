@@ -133,7 +133,7 @@ El clúster HPC LVMM cuenta con el sistema de administración de recursos [SLURM
 <a name="sinfo"></a>
 ## 4.1 sinfo
 
-El comando `sinfo` nor ayuda para obtener información sobre el cluster,
+El comando `sinfo` nos ayuda a obtener información sobre el cluster,
 
 ```shell
 $ sinfo
