@@ -5,7 +5,7 @@
 <a name="ssh"></a>
 ## 1. ¿Cómo acceder al cluster LVMM?
 
-La coneción al clúster computacional del Departamento de Modelación de Nanomateriales es por medio del protocolo [OpenSSH](https://www.openssh.com/) (Open Secure Shell, por sus siglas en inglés).
+La coneción al clúster computacional del [Departamento de Modelación de Nanomateriales](https://www.cnyn.unam.mx/?page_id=659) del [CNyN-UNAM](https://www.cnyn.unam.mx) es por medio del protocolo [OpenSSH](https://www.openssh.com/) (Open Secure Shell, por sus siglas en inglés).
 
 Dentro de la red del CNyN ésto se realiza por medio del siguiente comando:
 
@@ -13,7 +13,7 @@ Dentro de la red del CNyN ésto se realiza por medio del siguiente comando:
 $ ssh usuario@192.168.100.237
 ```
 
-donde `usuario` se refiere al nombre del usuario al que se quiere acceder en el clúster, con éste comando nos preguntará nuestra clave:
+donde `usuario` se refiere al nombre del usuario con el que se quiere acceder al clúster, una vez establecida la comunicación el servidor nos preguntará nuestra clave:
 
 ```bash
 By accessing this system, you consent to the following conditions:
@@ -25,7 +25,7 @@ usuario@192.168.100.237's password:
 
 ```
 
-Una vez que logrando igresar al clúster LVMM
+Una vez logrando igresar al clúster LVMM somos bienvenidos con el símbolo del sistema:
 
 ```bash
 usuario@lvmm:~$
@@ -35,41 +35,43 @@ usuario@lvmm:~$
 <a name="sftp"></a>
 ## 2. ¿Cómo transferir información al clúster LVMM?
 
-Para transferir información entre el cluster se utiliza el mismo protocolo `SSH`, ya sea con `sftp` o `scp`.
+Para transferir información entre el cluster se utiliza el mismo protocolo `SSH` utilizando las herrmientas `sftp` y/o `scp`.
 
-`sftp` se refiere a la implementación de un servicio FTP (File Transfer Protocol, por sus siglas en inglés) sobre el protocolo SSH:
+`sftp` se refiere a la implementación del servicio FTP (File Transfer Protocol, por sus siglas en inglés) sobre el protocolo SSH, la forma más básica para utilizarlo sería de la siguiente manera:
 
 ```bash
 $ sftp usuario@192.168.100.237
 ```
 
-otra forma de transferir archivos puede ser con la herramienta `scp`, copiar sobre el protocolo SSH, la forma de usarlo es:
+otra forma de transferir archivos puede ser con la herramienta `scp`, una implementación de comando `cp` (copiar) sobre el protocolo SSH, la forma de usarlo es:
 
 > **scp** [opciones] \<**origen**> \<**destino**>
 
-el \<**origen**> ó \<**destino**> remoto sería:
+en caso de que el \<**origen**> ó \<**destino**> sean remoto éstos tomarían la sigueinte forma:
 
 > usuario@192.168.100.237:\<**ruta al archivo/directorio**>
 
-sí es un directorio no olvide incluir la opción **-r** para que el copiado sea recursivo, por ejemplo para copiar archivos remotos a la PC **localhost**:
+si es un directorio no olvide incluir la opción **-r** para que el copiado se realice de manera recursivo, por ejemplo para copiar archivos remotos a la PC **localhost** se invocaría de la siguiente manera:
 
 ```bash
-localhost:resultados $ scp -r usuario@192.168.100.237:/tmpu/grupo/usuario/datos .
+localhost:~/resultados $ scp -r usuario@192.168.100.237:/tmpu/grupo/usuario/datos .
 ```
+
+ésto realizaría el copiado del directorio remoto `/tmpu/grupo/usuario/datos` hospedado en el servidor `192.168.100.237` accediendo como el usuario `usuario` al directorio actual `.` (recordando que el directorio `.` se refiere al directorio en el que se encuentra) de la PC `localhost`.
 
 <a name="module"></a>
 # 3. ¿Cómo utilizar los programas instalados en el clúster LVMM?
 
-Para poder utilizar los programas ya instalabos en el cúster LVMM es necesario cargar el módulo adecuado, ([Environment Modules](https://modules.sourceforge.net/)).
+Para poder utilizar los programas ya instalados en el cúster LVMM es necesario cargar el módulo adecuado, ([Environment Modules](https://modules.sourceforge.net/)).
 
 <a name="ml_av"></a>
-Para ver la lista de aplicaciones, librerías y utilidades, se pueden consultar con el siguiente comando:
+Para ver la lista de aplicaciones, librerías y utilidades, ésta se pueden consultar con el siguiente comando:
 
 ```bash
 $ module available
 ```
 
-o de forma adbreviada:
+o en su forma adbreviada:
 
 ```bash
 $ ml av
@@ -146,9 +148,9 @@ q_mem        up   infinite      1    mix compute-0-1
 q_cpu*       up   infinite      3    mix compute-0-[1-2,4]
 q_cpu*       up   infinite      1  alloc compute-0-3
 ```
-éste comando nos muestra las **particiones** (colar) de ejecución de trabajos, podemos ver que ésta instalación de `SLURM` cuenta con 3 particiones distintas: `gpu`, `mem` y `cpu`, también podemos ver el éstado de los nodos de éstas particiones; La partición `gpu` se encuentra **desocupada** y que cuenta de los nodos de cómputo: `compute-0-0` y `compute-0-5`; también podemos ver que de la partición `cpu`, el nodo `compute-0-3` se encuentra **ocupado** y los nodos `compute-0-1`, `compute-0-2` y el nodo `compute-0-4` se encuentran en un éstado de ocupación **mixto**.
+éste comando nos muestra las distintas **particiones** del clúster, podemos ver que ésta instalación de `SLURM` se cuenta con 3 particiones distintas: `q_gpu`, `q_mem` y `q_cpu`, también podemos ver el éstado de los nodos que conforman éstas particiones; La partición `q_gpu` se encuentra **desocupada** y que cuenta de los nodos de cómputo: `compute-0-0` y `compute-0-5`; también podemos ver que en la partición `q_cpu`, el nodo `compute-0-3` se encuentra **ocupado** y los nodos `compute-0-1`, `compute-0-2` y `compute-0-4` se encuentran en un éstado **mixto**.
 
-Podemos obtener la misma información pero ahora centrada en los nodos en lugar de las particiones con la opción `--Node` o en la forma abreviada `--N`,
+Podemos obtener la misma información pero ahora centrada en los nodos en lugar de las particiones con la opción `--Node` o en la forma adbreviada `-N`,
 
 ```bash
 $ sinfo --Node
@@ -166,10 +168,10 @@ compute-0-5      1     q_gpu idle
 <a name="srun"></a>
 ## 4.2 srun
 
-Para correr `vasp` en el cluster se puede ejecutar con la instrucción `srun` de la siguiente manera:
+Por ejemplo, para poder correr `VASP` en el cluster se puede ejecutar con la instrucción `srun` de la siguiente manera:
 
 ```bash
-$ srun --partition mem --ntasks 16 vasp_ncl
+$ srun --partition q_mem --ntasks 16 vasp_ncl
 ```
 ```bash
  running   16 mpi-ranks, on    1 nodes
@@ -178,13 +180,13 @@ $ srun --partition mem --ntasks 16 vasp_ncl
  vasp.6.4.1 05Apr23 (build Feb 23 2024 02:44:29) complex                        
 ```
 
-con ésto corremos el programa `vasp_ncl` en la partición `mem` con 15 tarea, el inconveniente de ésta forma de correr el programa es que tenemos que esperar hasta que estén disponibles los recursos requeridos y durante su ejecución.
+con ésto corremos el programa `vasp_ncl` en la partición `q_mem` con 16 tarea, el inconveniente de ésta forma de correr el programa es que tenemos que esperar hasta que estén disponibles los recursos requeridos, al igual que durante su ejecución.
 
 
 <a name="sbatch"></a>
 ## 4.3 sbatch
 
-La forma idonea para mandar un trabajo a una cola de ejecución es por medio del comando `sbatch`, para ésto tenemos que gerenar un script:
+La forma idónea para mandar un trabajo a una cola de ejecución es por medio del comando `sbatch`, para ésto tenemos que gerenar un script:
 
 `vasp.job:`
 ```shell
@@ -193,35 +195,36 @@ srun vasp_ncl
 ```
 una vez creado el script se somete el script con el comando `sbatch`de la sigueinte forma:
 
-```shell
+```bash
 $ sbatch --ntasks=16 --nodes=1 --partition=q_cpu vasp.job
 ```
 ```
 Submitted batch job 176
 ```
-ésto nos regresa un número `176` el cual es el `ID` del trabajo.
+ésto nos regresa un número `176`, el cual es el `ID` del trabajo.
 
 podemos agregar las opciones de la linea de comando de `sbatch` al mismo script, junto con otras opciones, de la siguiente forma:
 
 `vasp.job:`
 ```shell
 #!/bin/bash
-#SBATCH --job-name=VASP_test        # Nombre para identificar el trabajo -J
-#SBATCH --nodes=1                   # utilizar sólo un nodo -N
-#SBATCH --ntasks=16                 # ejecitar 16 tareas -n
-#SBATCH --cpus-per-task=1           # CPUs por tarea
+#SBATCH --job-name=VASP_test        # Nombre para identificar el trabajo (-J)
+#SBATCH --nodes=1                   # utilizar sólo un nodo (-N)
+#SBATCH --ntasks=16                 # ejecitar 16 tareas (-n)
+#SBATCH --cpus-per-task=1           # CPUs por tarea (-c)
 #SBATCH --ntasks-per-node=16        # tareas por nodo
-#SBATCH --output vasp_test-%j.o     # el nombre del archivo a donde escribir las salidas de la ejecución
-#SBATCH --error  vasp_test-%j.e     # nombre del archivo para escribir los errores de ejecución
+#SBATCH --output vasp_test-%j.o     # el nombre del archivo a donde escribir las salidas de la ejecución (-o)
+#SBATCH --error  vasp_test-%j.e     # nombre del archivo para escribir los errores de ejecución (-e)
 # %j se refiere al ID asignado a la hora de someter el script
-#SBATCH --partition=q_cpu           # partición en la cual ejecutar el script -p
+#SBATCH --partition=q_cpu           # partición en la cual ejecutar el script -(p)
 
-source /etc/profile.d/modules.sh   # Inicializar el sistema de módulos
+. /etc/profile.d/modules.sh        # Inicializar el sistema de módulos
 ml vasp/6.4.1-intel                # cargar el módulo adecuado
 
 srun vasp_ncl                      # ejecutar vast_ncl en los recursos solicitados
 ```
 para someter éste último script sólo tenemos que mandar como parametro el nombre del script (`vasp.job`) a `sbatch`:
+
 ```bash
 $ sbatch vasp.job
 ```
@@ -233,7 +236,7 @@ Submitted batch job 177
 <a name="squeue"></a>
 ## 4.4 squeue
 
-Para ver el éstado de ejecución de los trabajos en la cola podemos utilizar la instrucción `squeue`.
+Para ver el éstado de los trabajos sometidos a `Slurm` podemos utilizar la instrucción `squeue`.
 
 ```bash
 $ squeue
@@ -252,11 +255,13 @@ $ squeue
              184       q_cpu      igc  ncampos  R      56:32      1 compute-0-1
              186       q_mem Na2SO2_d    jvzmg  R    7:05:41      1 compute-0-1
 ```
-podemor verificar que nuestro trabajo esta corriendo (R), podemos ver sólo nuestros trabajos con la opción `--user $USER`
+
+podemos verificar que nuestro trabajo esta corriendo (`R`), con la opción `--user $USER` podemos ver sólo nuestros trabajos:
 
 ```bash
 $ squeue --user $USER
 ```
+
 ```bash
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
              177       q_cpu VASP_tes    suser  R      18:22      1 compute-0-1
@@ -265,10 +270,13 @@ $ squeue --user $USER
 
 <a name="scancel"></a>
 ## 4.5 scancel
-se puede cancelar el trabajo con el comando `scancel`:
+
+Se puede cancelar o retirar un trabajo de la cola con el comando `scancel`:
+
 ```bash
 $ scancel 177
 ```
+
 ```bash
 $ squeue -u $USER
 ```
@@ -276,7 +284,8 @@ $ squeue -u $USER
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
              177         cpu VASP_tes    suser  CA      18:22      1 compute-0-1
 ```
-podemos ver que el trabajo cambió de estado a cancelado (CA). También podemos utilizar el nombre el trabajo `VASP_test` con la opción `--name`,
+podemos ver que el trabajo cambió de estado a cancelando (CA). También podemos utilizar el nombre el trabajo `VASP_test` con la opción `--name`,
+
 ```bash
 $ scancel --name VASP_test
 ```
@@ -285,7 +294,7 @@ $ scancel --name VASP_test
 <a name="salloc"></a>
 ## 4.6 salloc
 
-También podemos ejecutar nuestros programas de una forma un poco más interactiva utilizando el comando `salloc`, el cual nos aloja los recursos solicitados y nos da un shell ineractivo
+También podemos ejecutar nuestros programas de forma interactiva utilizando el comando `salloc`, el cual nos aloja los recursos solicitados y nos da un shell ineractivo en que podemor realizar pruebas y diagnosticar errores,
 
 ```bash
 $ salloc -p q_cpu -N 1 -n 16 -J VASP_test -t 60
@@ -294,7 +303,8 @@ $ salloc -p q_cpu -N 1 -n 16 -J VASP_test -t 60
 salloc: Granted job allocation 178
 $
 ```
-una vez terminada nuestra ejecución o pruebas nos podemos salir como en cualquier shell,
+una vez terminada nuestra ejecución o pruebas nos podemos salir como en cualquier shell con
+
 ```bash
 $ exit
 ```
