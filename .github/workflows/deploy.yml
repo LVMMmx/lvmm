@@ -36,7 +36,7 @@ jobs:
       - name: Convert notebook to HTML
         run: |
           mkdir -p site
-          jupyter nbconvert --to html --output-dir site --output index 00_LVMM.ipynb
+          jupyter nbconvert --to html --output-dir site --output index index.ipynb
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
