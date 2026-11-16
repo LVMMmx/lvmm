@@ -33,7 +33,7 @@ jobs:
 
       - name: Convert notebook to Markdown
         run: |
-          jupyter nbconvert notebooks/*.ipynb --to markdown --output-dir .
+          jupyter nbconvert 00_LVMM.ipynb --to markdown --output-dir .
           # Rename if you want a specific file as homepage
           mv your-notebook.md index.md  # Optional
 
