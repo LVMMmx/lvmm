@@ -1,3 +1,8 @@
+---
+layout: default
+title: Manual de uso del clúster LVMM
+---
+
 ![LVMM logo](https://lvmm.mx/wp-content/uploads/2019/05/LVMM_logo_500-90x90.png)
 
 # Manual de uso del clúster LVMM
