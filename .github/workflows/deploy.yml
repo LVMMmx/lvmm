@@ -24,6 +24,16 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Convert notebook to Markdown
+        run: |
+          python -m pip install nbconvert
+          jupyter nbconvert --to markdown --output index index.ipynb
+          {
+            printf '%s\n' '---' 'layout: default' 'title: Manual de uso del clúster LVMM' '---' ''
+            cat index.md
+          } > index.md.tmp
+          mv index.md.tmp index.md
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
